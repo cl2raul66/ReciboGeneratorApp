@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ReciboGeneratorApp.Views.NewEditReceiptPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:ReceiptGeneratorApp.Models"
+    xmlns:vm="clr-namespace:ReciboGeneratorApp.ViewModels"
+    Title="Crear/Editar Recibo"
+    x:DataType="vm:NewEditReceiptViewModel"
+    BackgroundColor="#99F29191"
+    Shell.NavBarIsVisible="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+    <Frame Margin="8" VerticalOptions="End">
+        <VerticalStackLayout Spacing="16">
+            <Label
+                Style="{StaticResource LabelPageTitle}"
+                HorizontalOptions="CenterAndExpand"
+                Text="Crear/Editar Recibo" />
+            <ScrollView />
+            <HorizontalStackLayout HorizontalOptions="End" Spacing="8">
+                <Button
+                    FontAttributes="Bold"
+                    MinimumWidthRequest="92"
+                    Text="Agregar"
+                    TextTransform="Uppercase" />
+                <Button
+                    Command="{Binding CancelCommand}"
+                    FontAttributes="Bold"
+                    MinimumWidthRequest="92"
+                    Text="Cancelar"
+                    TextTransform="Uppercase" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Frame>
+
+</ContentPage>

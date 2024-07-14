@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace ReciboGeneratorApp.ViewModels;
 
-public partial class ConfiguracionTallerViewModel : ObservableObject
+public partial class FilteredSearchViewModel : ObservableObject
 {
 }

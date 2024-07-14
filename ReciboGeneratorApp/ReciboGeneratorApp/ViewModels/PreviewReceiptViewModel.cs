@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace ReciboGeneratorApp.ViewModels;
 
-public partial class BusquedaFiltrosViewModel : ObservableObject
+public partial class PreviewReceiptViewModel : ObservableObject
 {
 }

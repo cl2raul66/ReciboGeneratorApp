@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ReciboGeneratorApp.Views.SettingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Ajustes"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid
+            Margin="8"
+            ColumnDefinitions="*,auto"
+            ColumnSpacing="8">
+            <Label Style="{StaticResource LabelPageTitle}" Text="Ajustes" />
+        </Grid>
+
+        <Grid Grid.Row="2" Padding="8">
+            <Label
+                Style="{StaticResource LabelPageFooter}"
+                HorizontalOptions="CenterAndExpand"
+                Text="by R and A Media Lab, Group" />
+        </Grid>
+    </Grid>
+
+</ContentPage>

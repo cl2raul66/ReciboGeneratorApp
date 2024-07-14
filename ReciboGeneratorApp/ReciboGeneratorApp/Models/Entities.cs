@@ -21,7 +21,7 @@ public class WorkshopInfo
 
 public class ReceiptInfo
 {
-    public DateTime? IssueDate { get; set; }
+    public DateTime IssueDate { get; set; }
     public string? FileNumber { get; set; }
     public decimal? TotalAmount { get; set; }
 }

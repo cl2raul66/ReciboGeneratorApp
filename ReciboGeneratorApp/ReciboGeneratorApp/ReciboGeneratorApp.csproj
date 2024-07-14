@@ -21,10 +21,10 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>ReciboGeneratorApp</ApplicationTitle>
+		<ApplicationTitle>Generador de recibos</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.recibogeneratorapp</ApplicationId>
+		<ApplicationId>com.randamedialabgroup.recibogeneratorapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -67,19 +67,37 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\BusquedaFiltrosPage.xaml">
+	  <Compile Update="Views\FilteredSearchPage.xaml.cs">
+	    <DependentUpon>FilteredSearchPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\NewEditReceiptPage.xaml.cs">
+	    <DependentUpon>NewEditReceiptPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\PreviewReceiptPage.xaml.cs">
+	    <DependentUpon>PreviewReceiptPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\SettingPage.xaml.cs">
+	    <DependentUpon>SettingPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\HomePage.xaml.cs">
+	    <DependentUpon>HomePage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\FilteredSearchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ConfiguracionTallerPage.xaml">
+	  <MauiXaml Update="Views\SettingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\CrearEditarReciboPage.xaml">
+	  <MauiXaml Update="Views\NewEditReceiptPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MainPage.xaml">
+	  <MauiXaml Update="Views\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PrevisualizarReciboPage.xaml">
+	  <MauiXaml Update="Views\PreviewReceiptPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

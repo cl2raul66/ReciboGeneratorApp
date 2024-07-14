@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace ReciboGeneratorApp.ViewModels;
 
-public partial class CrearEditarReciboViewModel : ObservableObject
+public partial class SettingViewModel : ObservableObject
 {
 }

@@ -3,17 +3,121 @@
     x:Class="ReciboGeneratorApp.Views.SettingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ReciboGeneratorApp.ViewModels"
     Title="Ajustes"
+    x:DataType="vm:SettingViewModel"
     Shell.NavBarIsVisible="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid
             Margin="8"
             ColumnDefinitions="*,auto"
             ColumnSpacing="8">
-            <Label Style="{StaticResource LabelPageTitle}" Text="Ajustes" />
+            <HorizontalStackLayout Spacing="8">
+                <Button
+                    Command="{Binding GoToBackCommand}"
+                    FontFamily="icofont"
+                    Text="{StaticResource ArrowLeft}" />
+                <Label Style="{StaticResource LabelPageTitle}" Text="Ajustes" />
+            </HorizontalStackLayout>
         </Grid>
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="8,0"
+            Spacing="16">
+            <Frame>
+                <VerticalStackLayout Spacing="16">
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Entidad:"
+                        TextColor="{StaticResource Primary}"
+                        TextTransform="Uppercase" />
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="16">
+                        <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
+                            <Label Text="Logo" TextColor="{StaticResource Primary}" />
+                            <Frame Grid.Row="1" Padding="0">
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="100"
+                                    Source="{Binding LogoImageSource}"
+                                    WidthRequest="100" />
+                            </Frame>
+                            <Button
+                                Style="{StaticResource ButtonWithText}"
+                                Grid.Row="2"
+                                Command="{Binding LoadLogoCommand}"
+                                Text="Cargar"
+                                ToolTipProperties.Text="Cargar nuevo logo." />
+                        </Grid>
+                        <VerticalStackLayout Grid.Column="1" Spacing="16">
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Text="Nombre: *" TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Plain"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Name}" />
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                    <Label Text="Teléfono: *" TextColor="{StaticResource Primary}" />
+                                    <Entry
+                                        Grid.Row="1"
+                                        ClearButtonVisibility="WhileEditing"
+                                        IsSpellCheckEnabled="True"
+                                        IsTextPredictionEnabled="True"
+                                        Keyboard="Telephone"
+                                        Placeholder="Escriba aquí"
+                                        Text="{Binding Phone}" />
+                                </Grid>
+                                <Grid
+                                    Grid.Column="1"
+                                    RowDefinitions="auto,auto"
+                                    RowSpacing="8">
+                                    <Label Text="Correo electrónico: *" TextColor="{StaticResource Primary}" />
+                                    <Entry
+                                        Grid.Row="1"
+                                        ClearButtonVisibility="WhileEditing"
+                                        IsSpellCheckEnabled="True"
+                                        IsTextPredictionEnabled="True"
+                                        Keyboard="Email"
+                                        Placeholder="Escriba aquí"
+                                        Text="{Binding Email}" />
+                                </Grid>
+                            </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Text="Dirección: *" TextColor="{StaticResource Primary}" />
+                                <Editor
+                                    Grid.Row="1"
+                                    HeightRequest="52"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Plain"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Address}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,auto" ColumnSpacing="8">
+                        <Label IsVisible="{Binding IsVisibleInfoForWorkshopInfo}" Text="Debe rellenar los requeridos (*)" />
+                        <Button
+                            Style="{StaticResource ButtonWithText}"
+                            Grid.Column="1"
+                            Command="{Binding SavePreferencesCommand}"
+                            HorizontalOptions="End"
+                            Text="Aplicar cambios" />
+                    </Grid>
 
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
         <Grid Grid.Row="2" Padding="8">
             <Label
                 Style="{StaticResource LabelPageFooter}"

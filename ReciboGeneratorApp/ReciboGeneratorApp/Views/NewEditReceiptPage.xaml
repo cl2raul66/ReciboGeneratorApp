@@ -21,17 +21,11 @@
                 Text="Crear/Editar Recibo" />
             <ScrollView />
             <HorizontalStackLayout HorizontalOptions="End" Spacing="8">
+                <Button Style="{StaticResource ButtonWithText}" Text="Agregar" />
                 <Button
-                    FontAttributes="Bold"
-                    MinimumWidthRequest="92"
-                    Text="Agregar"
-                    TextTransform="Uppercase" />
-                <Button
+                    Style="{StaticResource ButtonWithText}"
                     Command="{Binding CancelCommand}"
-                    FontAttributes="Bold"
-                    MinimumWidthRequest="92"
-                    Text="Cancelar"
-                    TextTransform="Uppercase" />
+                    Text="Cancelar" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Frame>

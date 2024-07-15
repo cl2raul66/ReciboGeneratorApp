@@ -11,6 +11,11 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/icofont.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ButtonWithText" TargetType="Button">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="MinimumWidthRequest" Value="92" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+            </Style>
             <Style x:Key="LabelPageTitle" TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource Primary}" />
                 <Setter Property="FontAttributes" Value="Bold" />

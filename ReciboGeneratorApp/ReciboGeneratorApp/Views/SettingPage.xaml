@@ -47,13 +47,13 @@
                                     WidthRequest="100" />
                             </Frame>
                             <Button
+                                Style="{StaticResource ButtonWithText}"
                                 Grid.Row="2"
                                 Command="{Binding LoadLogoCommand}"
-                                Style="{StaticResource ButtonWithText}"
                                 Text="Cargar"
                                 ToolTipProperties.Text="Cargar nuevo logo." />
                         </Grid>
-                        <FlexLayout Grid.Column="1" Style="{StaticResource responsiveFlexLayout}">
+                        <FlexLayout Style="{StaticResource responsiveFlexLayout}" Grid.Column="1">
                             <Grid
                                 Margin="{OnIdiom Default='0,0,8,0',
                                                  Phone='0'}"
@@ -99,7 +99,7 @@
                                 RowDefinitions="auto,auto"
                                 RowSpacing="{OnIdiom Default='8',
                                                      Phone='0'}"
-                                WidthRequest="{OnIdiom Default='400',
+                                WidthRequest="{OnIdiom Default='-1',
                                                        Phone='-1'}">
                                 <Label Text="Correo electrónico: *" TextColor="{StaticResource Primary}" />
                                 <Entry
@@ -148,10 +148,10 @@
                             </Label.FormattedText>
                         </Label>
                         <Button
+                            Style="{StaticResource ButtonWithText}"
                             Grid.Column="1"
                             Command="{Binding SavePreferencesCommand}"
                             HorizontalOptions="End"
-                            Style="{StaticResource ButtonWithText}"
                             Text="Aplicar cambios" />
                     </Grid>
                 </VerticalStackLayout>
@@ -159,8 +159,8 @@
         </VerticalStackLayout>
         <Grid Grid.Row="2" Padding="8">
             <Label
-                HorizontalOptions="CenterAndExpand"
                 Style="{StaticResource LabelPageFooter}"
+                HorizontalOptions="CenterAndExpand"
                 Text="by R and A Media Lab, Group" />
         </Grid>
     </Grid>

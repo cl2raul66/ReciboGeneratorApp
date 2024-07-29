@@ -45,7 +45,7 @@
                                 <VisualState.Setters>
                                     <Setter Property="Margin" Value="0" />
                                     <Setter Property="Padding" Value="8,4" />
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
                                     <Setter Property="Stroke" Value="{StaticResource Primary}" />
                                 </VisualState.Setters>
                             </VisualState>
@@ -61,6 +61,13 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource Black}" />
                 <Setter Property="CornerRadius" Value="1" />
                 <Setter Property="WidthRequest" Value="1" />
+            </Style>
+            <Style x:Key="responsiveFlexLayout" TargetType="FlexLayout">
+                <Setter Property="AlignContent" Value="{OnIdiom Default='Stretch', Phone='Start'}" />
+                <Setter Property="AlignItems" Value="{OnIdiom Default='Start', Phone='Stretch'}" />
+                <Setter Property="Direction" Value="{OnIdiom Default='Row', Phone='Column'}" />
+                <Setter Property="JustifyContent" Value="{OnIdiom Default='Start', Phone='Center'}" />
+                <Setter Property="Wrap" Value="{OnIdiom Default='Wrap', Phone='NoWrap'}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -47,81 +47,120 @@
                                     WidthRequest="100" />
                             </Frame>
                             <Button
-                                Style="{StaticResource ButtonWithText}"
                                 Grid.Row="2"
                                 Command="{Binding LoadLogoCommand}"
+                                Style="{StaticResource ButtonWithText}"
                                 Text="Cargar"
                                 ToolTipProperties.Text="Cargar nuevo logo." />
                         </Grid>
-                        <VerticalStackLayout Grid.Column="1" Spacing="16">
-                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                        <FlexLayout Grid.Column="1" Style="{StaticResource responsiveFlexLayout}">
+                            <Grid
+                                Margin="{OnIdiom Default='0,0,8,0',
+                                                 Phone='0'}"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="{OnIdiom Default='8',
+                                                     Phone='0'}"
+                                WidthRequest="{OnIdiom Default='400',
+                                                       Phone='-1'}">
                                 <Label Text="Nombre: *" TextColor="{StaticResource Primary}" />
                                 <Entry
                                     Grid.Row="1"
                                     ClearButtonVisibility="WhileEditing"
+                                    HorizontalOptions="FillAndExpand"
                                     IsSpellCheckEnabled="True"
                                     IsTextPredictionEnabled="True"
                                     Keyboard="Plain"
                                     Placeholder="Escriba aquí"
                                     Text="{Binding Name}" />
                             </Grid>
-                            <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-                                <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                                    <Label Text="Teléfono: *" TextColor="{StaticResource Primary}" />
-                                    <Entry
-                                        Grid.Row="1"
-                                        ClearButtonVisibility="WhileEditing"
-                                        IsSpellCheckEnabled="True"
-                                        IsTextPredictionEnabled="True"
-                                        Keyboard="Telephone"
-                                        Placeholder="Escriba aquí"
-                                        Text="{Binding Phone}" />
-                                </Grid>
-                                <Grid
-                                    Grid.Column="1"
-                                    RowDefinitions="auto,auto"
-                                    RowSpacing="8">
-                                    <Label Text="Correo electrónico: *" TextColor="{StaticResource Primary}" />
-                                    <Entry
-                                        Grid.Row="1"
-                                        ClearButtonVisibility="WhileEditing"
-                                        IsSpellCheckEnabled="True"
-                                        IsTextPredictionEnabled="True"
-                                        Keyboard="Email"
-                                        Placeholder="Escriba aquí"
-                                        Text="{Binding Email}" />
-                                </Grid>
+                            <Grid
+                                Margin="{OnIdiom Default='0,0,8,0',
+                                                 Phone='0'}"
+                                HorizontalOptions="FillAndExpand"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="{OnIdiom Default='8',
+                                                     Phone='0'}"
+                                WidthRequest="130">
+                                <Label Text="Teléfono: *" TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Telephone"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Phone}" />
                             </Grid>
-                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                            <Grid
+                                Grid.Column="1"
+                                Margin="{OnIdiom Default='0,0,8,0',
+                                                 Phone='0'}"
+                                HorizontalOptions="FillAndExpand"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="{OnIdiom Default='8',
+                                                     Phone='0'}"
+                                WidthRequest="{OnIdiom Default='400',
+                                                       Phone='-1'}">
+                                <Label Text="Correo electrónico: *" TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Email"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Email}" />
+                            </Grid>
+                            <Grid
+                                RowDefinitions="auto,auto"
+                                RowSpacing="{OnIdiom Default='8',
+                                                     Phone='0'}"
+                                WidthRequest="{OnIdiom Default='400',
+                                                       Phone='-1'}">
                                 <Label Text="Dirección: *" TextColor="{StaticResource Primary}" />
                                 <Editor
                                     Grid.Row="1"
-                                    HeightRequest="52"
+                                    HeightRequest="57"
+                                    HorizontalOptions="FillAndExpand"
                                     IsSpellCheckEnabled="True"
                                     IsTextPredictionEnabled="True"
                                     Keyboard="Plain"
                                     Placeholder="Escriba aquí"
-                                    Text="{Binding Address}" />
+                                    Text="{Binding Address}"
+                                    VerticalTextAlignment="Start" />
                             </Grid>
-                        </VerticalStackLayout>
+                        </FlexLayout>
                     </Grid>
-                    <Grid ColumnDefinitions="*,auto" ColumnSpacing="8">
-                        <Label IsVisible="{Binding IsVisibleInfoForWorkshopInfo}" Text="Debe rellenar los requeridos (*)" />
+                    <Grid ColumnDefinitions="*,auto" ColumnSpacing="16">
+                        <Label IsVisible="{Binding TextInfoForWorkshopInfo, Converter={ctk:IsStringNotNullOrEmptyConverter}}" VerticalOptions="CenterAndExpand">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span
+                                        FontFamily="icofont"
+                                        Text="{StaticResource InfoCircle}"
+                                        TextColor="{StaticResource Tertiary}" />
+                                    <Span Text=" " />
+                                    <Span
+                                        FontFamily="icofont"
+                                        Text="{Binding TextInfoForWorkshopInfo}"
+                                        TextColor="{StaticResource Tertiary}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
                         <Button
-                            Style="{StaticResource ButtonWithText}"
                             Grid.Column="1"
                             Command="{Binding SavePreferencesCommand}"
                             HorizontalOptions="End"
+                            Style="{StaticResource ButtonWithText}"
                             Text="Aplicar cambios" />
                     </Grid>
-
                 </VerticalStackLayout>
             </Frame>
         </VerticalStackLayout>
         <Grid Grid.Row="2" Padding="8">
             <Label
-                Style="{StaticResource LabelPageFooter}"
                 HorizontalOptions="CenterAndExpand"
+                Style="{StaticResource LabelPageFooter}"
                 Text="by R and A Media Lab, Group" />
         </Grid>
     </Grid>

@@ -21,17 +21,12 @@ public static class MauiProgram
                 fonts.AddFont("icofont.ttf", "icofont");
             });
 
-        // Registrar servicios
         builder.Services.AddSingleton<ILiteDBService, LiteDBService>();
-        //builder.Services.AddSingleton<IPDFService, PDFService>();
-                
-        builder.Services.AddTransient<HomePage, HomeViewModel>();
+        builder.Services.AddSingleton<IPDFService, PDFService>();
+
+        builder.Services.AddSingleton<HomePage, HomeViewModel>();
         builder.Services.AddTransient<NewEditReceiptPage, NewEditReceiptViewModel>();
-        builder.Services.AddTransient<PreviewReceiptPage, PreviewReceiptViewModel>();
         builder.Services.AddTransient<SettingPage, SettingViewModel>();
-        builder.Services.AddTransient<FilteredSearchPage, FilteredSearchViewModel>();
-
-
 
 #if DEBUG
         builder.Logging.AddDebug();

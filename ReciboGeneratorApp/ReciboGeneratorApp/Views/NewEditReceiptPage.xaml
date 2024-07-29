@@ -3,31 +3,225 @@
     x:Class="ReciboGeneratorApp.Views.NewEditReceiptPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:model="clr-namespace:ReceiptGeneratorApp.Models"
     xmlns:vm="clr-namespace:ReciboGeneratorApp.ViewModels"
     Title="Crear/Editar Recibo"
     x:DataType="vm:NewEditReceiptViewModel"
-    BackgroundColor="#99F29191"
+    BackgroundColor="#66F29191"
     Shell.NavBarIsVisible="False">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" />
     </Shell.BackButtonBehavior>
 
     <Frame Margin="8" VerticalOptions="End">
-        <VerticalStackLayout Spacing="16">
+        <Grid RowDefinitions="auto,*,auto" RowSpacing="16">
             <Label
-                Style="{StaticResource LabelPageTitle}"
                 HorizontalOptions="CenterAndExpand"
-                Text="Crear/Editar Recibo" />
-            <ScrollView />
-            <HorizontalStackLayout HorizontalOptions="End" Spacing="8">
-                <Button Style="{StaticResource ButtonWithText}" Text="Agregar" />
-                <Button
-                    Style="{StaticResource ButtonWithText}"
-                    Command="{Binding CancelCommand}"
-                    Text="Cancelar" />
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
+                Style="{StaticResource LabelPageTitle}"
+                Text="{Binding Title, TargetNullValue='Crear recibo'}" />
+            <ScrollView Grid.Row="1">
+                <FlexLayout Style="{StaticResource responsiveFlexLayout}">
+                    <Frame
+                        Margin="0,0,8,8"
+                        HorizontalOptions="FillAndExpand"
+                        WidthRequest="{OnIdiom Default='400',
+                                               Phone='-1'}">
+                        <VerticalStackLayout Spacing="16">
+                            <Label
+                                FontAttributes="Bold"
+                                Text="Datos del recibo:"
+                                TextColor="{StaticResource Primary}"
+                                TextTransform="Uppercase" />
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Text="Fecha:" TextColor="{StaticResource Primary}" />
+                                <DatePicker
+                                    Grid.Row="1"
+                                    HorizontalOptions="Start"
+                                    WidthRequest="110" />
+                            </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Text="Expediente: " TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Plain"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding FileNumber}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame
+                        Margin="0,0,8,8"
+                        HorizontalOptions="FillAndExpand"
+                        WidthRequest="{OnIdiom Default='400',
+                                               Phone='-1'}">
+                        <VerticalStackLayout Spacing="16">
+                            <Label
+                                FontAttributes="Bold"
+                                Text="Datos del vehículo:"
+                                TextColor="{StaticResource Primary}"
+                                TextTransform="Uppercase" />
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Text="Nombre: *" TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Plain"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Name}" />
+                            </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Text="Teléfono: " TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Telephone"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Phone}" />
+                            </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Text="Vehículo: " TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Plain"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Vehicle}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame
+                        Margin="0,0,8,0"
+                        HorizontalOptions="FillAndExpand"
+                        WidthRequest="{OnIdiom Default='400',
+                                               Phone='-1'}">
+                        <VerticalStackLayout Spacing="16">
+                            <Grid ColumnDefinitions="*,auto" ColumnSpacing="16">
+                                <Label
+                                    FontAttributes="Bold"
+                                    Text="Detalles del servicio: *"
+                                    TextColor="{StaticResource Primary}"
+                                    TextTransform="Uppercase" />
+                                <HorizontalStackLayout
+                                    Grid.Column="1"
+                                    Spacing="8"
+                                    VerticalOptions="End">
+                                    <Button
+                                        Command="{Binding AddDetailCommand}"
+                                        FontFamily="icofont"
+                                        IsEnabled="{Binding IsEnableAgregarDetalle}"
+                                        Text="{StaticResource UiAdd}"
+                                        ToolTipProperties.Text="Agregar descripción." />
+                                    <Button
+                                        Command="{Binding RemoveDetailCommand}"
+                                        FontFamily="icofont"
+                                        IsEnabled="{Binding SelectedDetail, Converter={ctk:IsNotNullConverter}}"
+                                        Text="{StaticResource UiRemove}"
+                                        ToolTipProperties.Text="Eliminar descripción seleccionada." />
+                                </HorizontalStackLayout>
+                            </Grid>
+                            <Grid
+                                Grid.Column="1"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="8">
+                                <Label Text="Detalle: " TextColor="{StaticResource Primary}" />
+                                <Editor
+                                    Grid.Row="1"
+                                    HeightRequest="57"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Plain"
+                                    Placeholder="Escriba aquí"
+                                    Text="{Binding Description}"
+                                    VerticalOptions="Start" />
+                            </Grid>
+                            <Grid
+                                Grid.Column="1"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="8">
+                                <Label Text="Precio: " TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="End"
+                                    IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True"
+                                    Keyboard="Numeric"
+                                    Placeholder="0.00"
+                                    Text="{Binding Price}"
+                                    WidthRequest="110" />
+                            </Grid>
+                            <CollectionView
+                                ItemsSource="{Binding Details}"
+                                SelectedItem="{Binding SelectedDetail}"
+                                SelectionMode="Single">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout ItemSpacing="2" Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:ServiceDetail">
+                                        <Border Style="{StaticResource BorderItem}">
+                                            <Grid ColumnDefinitions="*,auto" ColumnSpacing="8">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    Style="{StaticResource LabelItem}"
+                                                    Text="{Binding Description}" />
+                                                <Label
+                                                    Grid.Column="1"
+                                                    FontAttributes="Bold"
+                                                    Style="{StaticResource LabelItem}"
+                                                    Text="{Binding Price, StringFormat='{0:F2}'}" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Frame>
+                </FlexLayout>
+            </ScrollView>
+
+            <Grid
+                Grid.Row="2"
+                ColumnDefinitions="*,auto"
+                ColumnSpacing="16">
+                <Label IsVisible="{Binding InfoText, Converter={ctk:IsStringNotNullOrEmptyConverter}}" VerticalOptions="CenterAndExpand">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                FontFamily="icofont"
+                                Text="{StaticResource InfoCircle}"
+                                TextColor="{StaticResource Tertiary}" />
+                            <Span Text=" " />
+                            <Span
+                                FontFamily="icofont"
+                                Text="{Binding InfoText}"
+                                TextColor="{StaticResource Tertiary}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <HorizontalStackLayout Grid.Column="1" Spacing="8">
+                    <Button
+                        Command="{Binding SaveReceiptCommand}"
+                        Style="{StaticResource ButtonWithText}"
+                        Text="{Binding TitleButton, TargetNullValue='Crear'}" />
+                    <Button
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource ButtonWithText}"
+                        Text="Cancelar" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Grid>
     </Frame>
 
 </ContentPage>

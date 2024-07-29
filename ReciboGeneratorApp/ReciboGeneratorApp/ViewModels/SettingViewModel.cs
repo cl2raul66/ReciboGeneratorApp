@@ -1,12 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
+using CommunityToolkit.Mvvm.Messaging;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReciboGeneratorApp.ViewModels;
 
@@ -21,7 +17,7 @@ public partial class SettingViewModel : ObservableValidator
     FileResult? imageLoaded = null;
 
     [ObservableProperty]
-    bool isVisibleInfoForWorkshopInfo;
+    string? textInfoForWorkshopInfo;
 
     [ObservableProperty]
     [Required]
@@ -67,9 +63,9 @@ public partial class SettingViewModel : ObservableValidator
         ValidateAllProperties();
         if (HasErrors)
         {
-            IsVisibleInfoForWorkshopInfo = true;
+            TextInfoForWorkshopInfo = "Debe rellenar los requeridos (*)";
             await Task.Delay(4000);
-            IsVisibleInfoForWorkshopInfo = false;
+            TextInfoForWorkshopInfo = null;
             return;
         }
 
@@ -88,7 +84,15 @@ public partial class SettingViewModel : ObservableValidator
             {
                 await sourceStream.CopyToAsync(destinationStream);
             }
-            Preferences.Set(nameof(LogoImageSource), destinationPath);
+            Preferences.Set("PathLogo", destinationPath);
+        }
+
+        var result = WeakReferenceMessenger.Default.Send(true.ToString(), "HaveWorkshopInfo");
+        if (!string.IsNullOrEmpty(result))
+        {
+            TextInfoForWorkshopInfo = "Se modifico los datos de la entidad.";
+            await Task.Delay(4000);
+            TextInfoForWorkshopInfo = null;
         }
     }
     #endregion
@@ -112,7 +116,7 @@ public partial class SettingViewModel : ObservableValidator
         Email = Preferences.Get(nameof(Email), string.Empty);
         Address = Preferences.Get(nameof(Address), string.Empty);
 
-        var logoPath = Preferences.Get(nameof(LogoImageSource), string.Empty);
+        var logoPath = Preferences.Get("PathLogo", string.Empty);
         if (!string.IsNullOrEmpty(logoPath))
         {
             LogoImageSource = ImageSource.FromFile(logoPath);

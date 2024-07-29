@@ -3,6 +3,7 @@
     x:Class="ReciboGeneratorApp.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:model="clr-namespace:ReceiptGeneratorApp.Models"
     xmlns:vm="clr-namespace:ReciboGeneratorApp.ViewModels"
     Title="Generador de recibos"
@@ -14,30 +15,34 @@
             Margin="8"
             ColumnDefinitions="*,auto"
             ColumnSpacing="8">
-            <Label Style="{StaticResource LabelPageTitle}" Text="Generador de Recibos" />
+            <Label
+                LineBreakMode="TailTruncation"
+                Style="{StaticResource LabelPageTitle}"
+                Text="Generador de Recibos" />
             <HorizontalStackLayout Grid.Column="1" Spacing="8">
                 <Button
-                    Command="{Binding ShowPreviewReceiptPageCommand}"
+                    Command="{Binding ShowShareDocumenPageCommand}"
                     FontFamily="icofont"
-                    IsEnabled="False"
-                    Text="{StaticResource EyeAlt}"
-                    ToolTipProperties.Text="Previsualizar recivo." />
-                <Button
-                    FontFamily="icofont"
-                    IsEnabled="False"
+                    IsEnabled="{Binding SelectedDocument, Converter={ctk:IsNotNullConverter}}"
                     Text="{StaticResource Share}"
                     ToolTipProperties.Text="Compartir recibo como fichero PDF." />
-                <BoxView Style="{StaticResource ElementSeparator}" />
+                <BoxView IsVisible="{OnIdiom Phone='False'}" Style="{StaticResource ElementSeparator}" />
                 <Button
-                    Command="{Binding ShowFilteredSearchPageCommand}"
+                    Command="{Binding ShowEditReceiptPageCommand}"
                     FontFamily="icofont"
-                    Text="{StaticResource UiSearch}"
-                    ToolTipProperties.Text="Buscar recibo." />
+                    IsEnabled="{Binding SelectedDocument, Converter={ctk:IsNotNullConverter}}"
+                    IsVisible="{OnIdiom Phone='False',
+                                        Default='True'}"
+                    Text="{StaticResource UiEdit}"
+                    ToolTipProperties.Text="Editar recibo." />
                 <Button
-                    Command="{Binding ShowNewEditReceiptPageCommand}"
+                    Command="{Binding ShowNewReceiptPageCommand}"
                     FontFamily="icofont"
+                    IsEnabled="{Binding HaveWorkshopInfo}"
+                    IsVisible="{OnIdiom Phone='False',
+                                        Default='True'}"
                     Text="{StaticResource UiAdd}"
-                    ToolTipProperties.Text="Nuevo Recibo." />
+                    ToolTipProperties.Text="Crea nuevo recibo." />
                 <BoxView Style="{StaticResource ElementSeparator}" />
                 <Button
                     Command="{Binding ShowSettingPageCommand}"
@@ -46,30 +51,83 @@
                     ToolTipProperties.Text="Ajustes de la aplicación" />
             </HorizontalStackLayout>
         </Grid>
-        <CollectionView Grid.Row="1">
+        <CollectionView
+            Grid.Row="1"
+            Margin="8,0"
+            ItemsSource="{Binding Documents}"
+            SelectedItem="{Binding SelectedDocument}"
+            SelectionMode="Single">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="2"
+                    Orientation="Vertical"
+                    Span="6"
+                    VerticalItemSpacing="2" />
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Receipt">
-                    <Border Margin="0,5" Padding="10">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <StackLayout>
-                                <Label FontAttributes="Bold" Text="{Binding ClientDetails.Name}" />
-                                <Label Text="{Binding ReceiptDetails.IssueDate, StringFormat='{0:d}'}" />
-                                <Label Text="{Binding ReceiptDetails.TotalAmount, StringFormat='Total: {0:C}'}" />
-                            </StackLayout>
-                            <Button
+                    <Border Style="{StaticResource BorderItem}">
+                        <Grid
+                            ColumnDefinitions="*,auto"
+                            ColumnSpacing="8"
+                            RowDefinitions="auto,auto"
+                            RowSpacing="0">
+                            <Label
+                                FontAttributes="Bold"
+                                LineBreakMode="TailTruncation"
+                                Style="{StaticResource LabelItem}"
+                                Text="{Binding ReceiptDetails.IssueDate, StringFormat='{0:d}'}"
+                                ToolTipProperties.Text="{Binding ReceiptDetails.IssueDate, StringFormat='{0:m}. {0:yyyy}'}" />
+                            <Label
                                 Grid.Column="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=VerReciboCommand}"
-                                CommandParameter="{Binding .}"
-                                Text="Ver" />
+                                FontAttributes="Bold"
+                                Style="{StaticResource LabelItem}"
+                                Text="{Binding ReceiptDetails.TotalPrice, StringFormat='{0:C}'}" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalOptions="CenterAndExpand"
+                                Style="{StaticResource LabelItem}"
+                                Text="{Binding ClientDetails.Name}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Frame
+            Grid.Row="1"
+            Margin="8,0"
+            IsVisible="{OnIdiom Default='False',
+                                Phone='True'}"
+            VerticalOptions="End">
+            <Grid RowDefinitions="auto,auto" RowSpacing="16">
+                <Label
+                    Text="Accesos rápidos: "
+                    TextColor="{StaticResource Primary}"
+                    TextTransform="Uppercase" />
+                <VerticalStackLayout Grid.Row="1" Spacing="8">
+                    <Button
+                        Command="{Binding ShowNewReceiptPageCommand}"
+                        FontAttributes="Bold"
+                        Text="Nuevo recibo"
+                        TextTransform="Uppercase"
+                        ToolTipProperties.Text="Crea nuevo recibo." />
+                    <Button
+                        Command="{Binding ShowEditReceiptPageCommand}"
+                        FontAttributes="Bold"
+                        IsEnabled="{Binding SelectedDocument, Converter={ctk:IsNotNullConverter}}"
+                        Text="Modificar recibo"
+                        TextTransform="Uppercase"
+                        ToolTipProperties.Text="Editar recibo." />
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
         <Grid Grid.Row="2" Padding="8">
             <Label
-                Style="{StaticResource LabelPageFooter}"
                 HorizontalOptions="CenterAndExpand"
+                Style="{StaticResource LabelPageFooter}"
                 Text="by R and A Media Lab, Group" />
         </Grid>
     </Grid>
